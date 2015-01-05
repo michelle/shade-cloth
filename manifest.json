@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Shade cloth",
+  "description": "Hides other interviewers' feedback on Greenhouse before you enter your own.",
+  "version": "0.0.1",
+
+  "web_accessible_resources": [
+    "images/*.png"
+  ],
+
+  "icons": {
+    "128": "icon.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://app.greenhouse.io/people/*"],
+      "css": ["shade-cloth.css"],
+      "js": ["jquery.js", "shade-cloth.js"]
+    }
+  ]
+}
