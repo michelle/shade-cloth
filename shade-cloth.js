@@ -1,4 +1,40 @@
 $(function() {
+  if (window.location.pathname.indexOf('people') == '1') {
+    scorecardOperations();
+  }
+
+  if (window.location.pathname.indexOf('guides') == '1') {
+    ratingOperations();
+  }
+
+  if (window.location.pathname.indexOf('scorecards') == '1') {
+    $('.rating-icon.rating-with-name').show();
+    modifyThumbs();
+  }
+});
+
+function ratingOperations() {
+  if (!setRatingNames()) {
+    var interval = setInterval(function() {
+      if (setRatingNames()) {
+        clearInterval(interval);
+      }
+    }, 500);
+  }
+
+  function setRatingNames() {
+    if ($('.definitely-not').length) {
+      $('.definitely-not').text('Solid no');
+      $('.no').text('Weak no');
+      $('.yes').text('Weak yes');
+      $('.absolutely').text('Solid yes');
+      return true;
+    }
+    return false;
+  }
+}
+
+function scorecardOperations() {
   var gcShowFeedback = false;
   var gcForceShowFeedback = false;
 
@@ -19,6 +55,7 @@ $(function() {
     }
 
     injectShadeClothScorecardElements();
+    modifyThumbs();
 
     // Hack to get fullname of current user. If this doesn't work  for every case
     // then we'll need to inject this entire script into the DOM so we can have
@@ -96,4 +133,11 @@ $(function() {
         });
     }
   }
-});
+}
+
+function modifyThumbs() {
+  $('.thumbs-up').removeClass('thumbs-up').addClass('gcGreen').text('Weak yes');
+  $('.two-thumbs-up').removeClass('two-thumbs-up').addClass('thumbs-up').addClass('gcGreen').text('Solid yes');
+  $('.thumbs-down').removeClass('thumbs-down').addClass('gcRed').text('Weak no');
+  $('.two-thumbs-down').removeClass('two-thumbs-down').addClass('thumbs-down').addClass('gcRed').text('Solid no');
+}

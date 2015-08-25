@@ -15,7 +15,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://app.greenhouse.io/people/*"],
+      "matches": ["*://app.greenhouse.io/people/*", "*://app.greenhouse.io/guides/*/people/*", "*://app.greenhouse.io/scorecards/*"],
       "css": ["shade-cloth.css"],
       "js": ["jquery.js", "shade-cloth.js"]
     }

@@ -34,3 +34,40 @@
   border-bottom-color: #0e74c3;
   border-top-color: #369ad9;
 }
+
+
+.definitely-not {
+  
+}
+
+div #candidate_rating_options li.absolutely.selected {
+  background-color: #e2f2d5 !important;
+  border: 1px solid #3f6529 !important;
+  color: #3f6529 !important;
+}
+
+div #candidate_rating_options li.yes.selected {
+  background-color: #e2f2d5 !important;
+  border: 1px solid #ACCC98 !important;
+  color: #ACCC98 !important;
+}
+
+div #candidate_rating_options li.no.selected {
+  background-color: #f6d5d4 !important;
+  border: 1px solid #D49191 !important;
+  color: #D49191 !important;
+}
+
+div #candidate_rating_options li.definitely-not.selected {
+  background-color: #f6d5d4 !important;
+  border: 1px solid #d70000 !important;
+  color: #d70000 !important;
+}
+
+.gcRed {
+  color: #D49191 !important;
+}
+
+.gcGreen {
+  color: #ACCC98 !important;
+}
