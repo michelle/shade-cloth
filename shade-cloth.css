@@ -1,3 +1,36 @@
 .rating-icon.rating-with-name {
   display: none;
 }
+
+.gcShowScorecards {
+  cursor: pointer;
+
+  border: 1px solid #2b95d1;
+  border-bottom-color: #147bc6;
+  border-top-color: #45a9e2;
+  border-radius: 5px;
+  
+  position: relative;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: top;
+  
+  box-sizing: border-box;
+  padding: 4px 9px;
+  font-size: 14px;
+  background: linear-gradient(to bottom, #51b5ef, #39a0ea);
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(14, 116, 195, 0.75);
+  font-weight: 400;
+}
+
+.gcShowScorecards:focus {
+  outline: none;
+}
+
+.gcShowScorecards:hover {
+  background: linear-gradient(to bottom, #48a8e8, #3296e3);
+  border: 1px solid #258dd0;
+  border-bottom-color: #0e74c3;
+  border-top-color: #369ad9;
+}
