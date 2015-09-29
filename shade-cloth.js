@@ -1,20 +1,35 @@
 $(function() {
-  if (window.location.pathname.indexOf('people') == '1') {
+  var plan = $('.hiring_plan, .hiring-plan').text().toLowerCase();
+  var isEngineer = plan.indexOf('engineer') !== -1 &&
+    plan.indexOf('manager') === -1;
+
+  if (!isEngineer) {
+    showFeedback();
+    return;
+  }
+
+  if (window.location.pathname.indexOf('people') === 1) {
     scorecardOperations();
   }
 
-  if (window.location.pathname.indexOf('guides') == '1') {
+  if (window.location.pathname.indexOf('guides') === 1) {
     ratingOperations();
   }
 
-  if (window.location.pathname.indexOf('scorecards') == '1') {
+  if (window.location.pathname.indexOf('scorecards') === 1) {
     $('.rating-icon.rating-with-name').show();
     modifyThumbs();
   }
 });
 
+function isPhoneScreen() {
+  return $('#interview_kit_header .step').text().toLowerCase().indexOf('team screen') !== -1;
+}
+
 function ratingOperations() {
-  if (!setRatingNames()) {
+  var changeRatingsFn = isPhoneScreen() ? setPhonescreenRatingNames : setRatingNames;
+
+  if (!changeRatingsFn()) {
     var interval = setInterval(function() {
       if (setRatingNames()) {
         clearInterval(interval);
@@ -22,21 +37,44 @@ function ratingOperations() {
     }, 500);
   }
 
-  function setRatingNames() {
-    if ($('.definitely-not').length) {
-      $('.definitely-not').text('Solid no');
-      $('.no').text('Weak no');
-      $('.yes').text('Weak yes');
-      $('.absolutely').text('Solid yes');
-      return true;
+
+  function setPhonescreenRatingNames() {
+    console.log('here')
+    if (!$('*[data-rating-id=2]').length) {
+      return false;
     }
-    return false;
+
+    $('*[data-rating-id=1]').remove();
+    $('*[data-rating-id=2]').text('Fail');
+    $('*[data-rating-id=3]').text('Pass');
+    $('*[data-rating-id=4]').remove();
   }
+
+  function setRatingNames() {
+    if (!$('*[data-rating-id=1]').length) {
+      return false;
+    }
+
+    $('*[data-rating-id=1]').text('Solid no');
+    $('*[data-rating-id=2]').text('Weak no');
+    $('*[data-rating-id=3]').text('Weak yes');
+    $('*[data-rating-id=4]').text('Solid yes');
+    return true;
+  }
+}
+
+var gcForceShowFeedback = false;
+
+function showFeedback() {
+  gcForceShowFeedback = true;
+  $('.rating-icon.rating-with-name').show();
+  $('.gcLlama').remove();
+  $('.gcShowScorecards').remove();
 }
 
 function scorecardOperations() {
   var gcShowFeedback = false;
-  var gcForceShowFeedback = false;
+  gcForceShowFeedback = false;
 
   $('a[href="#scorecard"]').on('click', pollScorecards);
   pollScorecards();
@@ -73,7 +111,7 @@ function scorecardOperations() {
       }
     }
 
-    var feedback = $('#scorecards .name');
+    var feedback = $($('#scorecards').get(0)).find('.name');
     if (!feedback.length) {
       gcShowFeedback = true;
       $('.interview .wrapper .interview-info').each(function() {
@@ -103,12 +141,6 @@ function scorecardOperations() {
     return true;
   }
 
-  function showFeedback() {
-    gcForceShowFeedback = true;
-    $('.rating-icon.rating-with-name').show();
-    $('.gcLlama').remove();
-  }
-
   function injectShadeClothScorecardElements() {
     if (gcShowFeedback || gcForceShowFeedback) {
       return;
@@ -136,8 +168,13 @@ function scorecardOperations() {
 }
 
 function modifyThumbs() {
-  $('.thumbs-up').removeClass('thumbs-up').addClass('gcGreen').text('Weak yes');
-  $('.two-thumbs-up').removeClass('two-thumbs-up').addClass('thumbs-up').addClass('gcGreen').text('Solid yes');
-  $('.thumbs-down').removeClass('thumbs-down').addClass('gcRed').text('Weak no');
-  $('.two-thumbs-down').removeClass('two-thumbs-down').addClass('thumbs-down').addClass('gcRed').text('Solid no');
+  if (isPhoneScreen()) {
+    $('.thumbs-up').text('Pass');
+    $('.thumbs-down').text('Fail');
+  } else {
+    $('.thumbs-up').removeClass('thumbs-up').addClass('gcGreen').text('Weak yes');
+    $('.two-thumbs-up').removeClass('two-thumbs-up').addClass('thumbs-up').addClass('gcDarkGreen').text('Solid yes');
+    $('.thumbs-down').removeClass('thumbs-down').addClass('gcRed').text('Weak no');
+    $('.two-thumbs-down').removeClass('two-thumbs-down').addClass('thumbs-down').addClass('gcDarkRed').text('Solid no');
+  }
 }

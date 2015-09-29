@@ -71,3 +71,11 @@ div #candidate_rating_options li.definitely-not.selected {
 .gcGreen {
   color: #ACCC98 !important;
 }
+
+.gcDarkRed {
+  color: #d70000 !important;
+}
+
+.gcDarkGreen {
+  color: #3f6529 !important;
+}

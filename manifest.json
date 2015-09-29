@@ -3,7 +3,7 @@
 
   "name": "Shade cloth",
   "description": "Hides other interviewers' feedback on Greenhouse before you enter your own.",
-  "version": "0.0.1",
+  "version": "0.0.3",
 
   "web_accessible_resources": [
     "images/*.png"
